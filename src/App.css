@@ -31,3 +31,16 @@ address{
 .navbar-dark {
     background-color: #512DA8;
 }
+
+button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  .on {
+    color: orange;
+  }
+  .off {
+    color: #ccc;
+  }

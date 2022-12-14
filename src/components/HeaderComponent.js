@@ -1,7 +1,15 @@
 import React,{Component} from 'react';
 import { Jumbotron, Navbar, Nav, NavbarToggler, Collapse, NavbarBrand, NavItem ,
-Button ,Modal, ModalHeader, ModalBody, Label,Input,Form,FormGroup} from 'reactstrap';
+Button ,Modal, ModalHeader, ModalBody, Label,Input,Form,FormGroup,Row,Col} from 'reactstrap';
 import {NavLink} from 'react-router-dom';
+import {LocalForm,Errors,Control} from 'react-redux-form';
+
+const required = (val) => val && val.length;
+const userNameSpace =(val) => !(val) || !/\s/.test(val);
+const useCap = (val) => !(val) || !/[A-Z]/.test(val);
+
+// const minLength = (len) => (val) => !(val)|| (val.lenth <= len);
+// const maxLength = (len) => (val) => (val) && (val.lenght >= len)
 
 class Header extends Component {
 
@@ -30,12 +38,14 @@ class Header extends Component {
         });
     }
 
-    handleLogin(event) {
-        this.toggaleModal();
-        alert(" Username: "+ this.username.value+" Password: "+ this.password.value+
-         " Remember: "+ this.remember.checked );
-         event.preventDefault();
+    handleLogin(values) {
+        
+        alert("Submitted: " + JSON.stringify(values) );
     }
+    // handleSubmit(values) {
+    //     console.log("Current State is:" + JSON.stringify(values));
+    //     alert("Current State is:" + JSON.stringify(values));
+    // }
 
     render() {
         return(
@@ -93,28 +103,66 @@ class Header extends Component {
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggaleModal}>
                     <ModalHeader toggle={this.toggaleModal}>Login</ModalHeader>
                     <ModalBody>
-                        <Form onSubmit={this.handleLogin}>
-                            <FormGroup>
-                                <Label htmlFor="username"> Username</Label>
-                                <Input type="text" id="username" name="usesrname" 
-                                innerRef={(input) => this.username = input} />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label htmlFor="password"> Password</Label>
-                                <Input type="password" id="password" name="password"
-                                innerRef={(input) => this.password = input} />
-                            </FormGroup>
-                            <FormGroup check>
+                        <LocalForm onSubmit={this.handleLogin}>
+                            <Row className="form-group">
+                                <Label htmlFor="username" md={2}> Username</Label>
+                                <Col md={8}>
+                                    <Control.text model=".username" id="username" name="usesrname" placeholder="Enter Username"
+                                    className='form-control'
+                                    validators={{
+                                        required,userNameSpace
+                                        ,useCap
+                                    }}
+                                     />
+                                     <Errors 
+                                     className="text-danger"
+                                     model=".username"
+                                     show="touched"
+                                     messages={{
+                                         required:" Enter username",
+                                         userNameSpace: "dont use space ",
+                                         useCap:" Dont use Caps"
+                                        }
+                                     }
+                                     />
+
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Label htmlFor="password" md={2}> Password</Label>
+                                <Col md={8}>
+                                    <Control.password model=".password" id="password" name="password" placeholder="Enter Password"
+                                    className="form-control"
+                                    validators={{
+                                        required
+                                    }}
+                                     />
+                                     <Errors 
+                                     className="text-danger"
+                                     model=".password"
+                                     show="touched"
+                                     messages={{
+                                         required:" Enter password"
+                                        }
+                                     }
+                                     />
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
                                 <Label check>
-                                    <Input type="checkbox" name="remember"
-                                    innerRef={(input) => this.remember = input} />
+                                    <Control.checkbox model=".checkbox" name="remember"
+                                     />
                                     Remember
                                 </Label>
-                            </FormGroup>
-                            <Button type="submit" value="submit" color="primary">
-                                Login
-                            </Button>
-                        </Form>
+                            </Row>
+                            <Row className="form-group">
+                                <Col md={12}>
+                                    <Button type="submit" value="submit" color="primary">
+                                        Login
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </LocalForm>
                     </ModalBody>
                 </Modal>
             </React.Fragment>
