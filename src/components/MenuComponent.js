@@ -51,7 +51,7 @@ function RenderMenuItem ({dish, onClick}) {
                     <div className='row'>
                         <Breadcrumb>
                             <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
-                            <BreadcrumbItem active>Menu</BreadcrumbItem>
+                            <BreadcrumbItem active>Menuu</BreadcrumbItem>
                         </Breadcrumb>
                         <div className='col-12'>
                             <h3>Menu</h3>

@@ -1,5 +1,6 @@
 {
   "name": "confusion",
+  "homepage": "https://husniabad.github.io/had-res",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -24,12 +25,17 @@
   },
   "scripts": {
     "start": "react-scripts start",
+
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d build",
+
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
     "bootstrap": "^4.6.0",
+    "gh-pages": "^4.0.0",
     "react-router-dom": "^4.3.1"
   }
 }
