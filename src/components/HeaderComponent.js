@@ -1,15 +1,12 @@
 import React,{Component} from 'react';
 import { Jumbotron, Navbar, Nav, NavbarToggler, Collapse, NavbarBrand, NavItem ,
-Button ,Modal, ModalHeader, ModalBody, Label,Input,Form,FormGroup,Row,Col} from 'reactstrap';
+        Button ,Modal, ModalHeader, ModalBody, Label,Row,Col} from 'reactstrap';
 import {NavLink} from 'react-router-dom';
 import {LocalForm,Errors,Control} from 'react-redux-form';
 
 const required = (val) => val && val.length;
 const userNameSpace =(val) => !(val) || !/\s/.test(val);
 const useCap = (val) => !(val) || !/[A-Z]/.test(val);
-
-// const minLength = (len) => (val) => !(val)|| (val.lenth <= len);
-// const maxLength = (len) => (val) => (val) && (val.lenght >= len)
 
 class Header extends Component {
 
@@ -42,11 +39,7 @@ class Header extends Component {
         
         alert("Submitted: " + JSON.stringify(values) );
     }
-    // handleSubmit(values) {
-    //     console.log("Current State is:" + JSON.stringify(values));
-    //     alert("Current State is:" + JSON.stringify(values));
-    // }
-
+  
     render() {
         return(
             <React.Fragment>

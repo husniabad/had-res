@@ -131,6 +131,8 @@ class CommentForm extends Component{
            );
         }
    }
+
+   //StarRating is function used to enter star rating for the comments 
    const StarRating = () => {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);

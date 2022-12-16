@@ -1,31 +1,47 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import {Loading} from './LoadingComponent';
+import { Fade, Stagger} from 'react-animation-components';
+import { baseUrl } from '../shared/baseUrl';
 
 
-function RenderLeader(props) {
+function RenderLeader({leader}) {
     return (
       <Media>
         <Media left className="mr-2">
-          <Media object src={props.leader.image} alt={props.leader.image} />
+          <Media object src={baseUrl + leader.image} alt={leader.name} />
         </Media>
         <Media body className="ml-5">
-          <Media heading className='font-weight-bold'>{props.leader.name}</Media>
-          <p>{props.leader.designation}</p>
-          <p>{props.leader.description}</p>
+          <Media heading className='font-weight-bold'>{leader.name}</Media>
+          <p>{leader.designation}</p>
+          <p>{leader.description}</p>
         </Media>
       </Media>
     );
   }
+
+  function LeaderComment ({leaders, isLoading, errMess}) {
+    if (isLoading) {
+        return <Loading />;
+    }
+    else if (errMess) {
+        return <h4>{errMess}</h4>;
+    }
+    else
+        return(
+        <Stagger in>
+            {leaders.map(leader => (
+                <Fade in key={leader.id}>
+                    <RenderLeader key={leader.id} leader={leader} />
+                </Fade>
+            ))}
+        </Stagger>
+        );
+  }
   
   function About(props) {
-    const leaders = props.leaders.map(leader => {
-      return (
-        <div key={leader.id} className="col-12 mt-5">
-          <RenderLeader leader={leader} />
-        </div>
-      );
-    });
+    
     return(
         <div className="container">
             <div className="row">
@@ -81,9 +97,14 @@ function RenderLeader(props) {
                     <h2>Corporate Leadership</h2>
                 </div>
                 <div className="col-12">
+                    <div className='row'>
                     <Media list>
-                        {leaders}
+                       <LeaderComment
+                       leaders={props.leaders}
+                       isLoading={props.leaderLoading}
+                       errMess={props.leaderErrMess} />
                     </Media>
+                    </div>
                 </div>
             </div>
         </div>
